@@ -1,0 +1,53 @@
+% IoT Edge Processing for Dengue Control using MATLAB
+
+% Step 1: Load the environmental data
+% Replace this with actual sensor data collection
+temperature = [30, 31, 29, 32, 33, 34]; % Example temperature data
+humidity = [80, 85, 82, 81, 84, 83]; % Example humidity data
+
+% Step 2: Preprocessing on edge (Filter noise or irrelevant data)
+smoothed_temperature = movmean(temperature, 3); % Smooth the data
+smoothed_humidity = movmean(humidity, 3);
+
+% Step 3: Feature extraction on the edge
+avg_temp = mean(smoothed_temperature); % Extract average temperature
+avg_humidity = mean(smoothed_humidity); % Extract average humidity
+
+% Step 4: Simple threshold-based analysis on edge device
+% These thresholds could be derived from research about dengue outbreaks
+if avg_temp > 30 && avg_humidity > 80
+    warning('Potential Dengue Outbreak Risk Detected!');
+else
+    disp('No immediate Dengue risk.');
+end
+
+% Step 5: Cloud-based processing (assuming data sent to cloud)
+% Here, we simulate cloud processing with machine learning models
+
+% Assuming cloud runs a predictive model (e.g., logistic regression, SVM)
+% Load a pre-trained machine learning model (You would train this separately)
+% Model should predict outbreak risk based on multiple variables
+
+% Example using a random classifier for demonstration
+outbreak_risk = randi([0, 1]); % Random 0 or 1 to simulate ML model prediction
+
+if outbreak_risk == 1
+    disp('High risk of Dengue outbreak. Take action!');
+    % Trigger actions like spraying insecticides, etc.
+else
+    disp('Low risk of Dengue outbreak.');
+end
+
+% Step 6: Visualization
+figure;
+subplot(2, 1, 1);
+plot(temperature, '-o');
+title('Temperature Data');
+xlabel('Time');
+ylabel('Temperature (°C)');
+
+subplot(2, 1, 2);
+plot(humidity, '-o');
+title('Humidity Data');
+xlabel('Time');
+ylabel('Humidity (%)');
